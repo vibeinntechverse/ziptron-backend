@@ -127,7 +127,7 @@ enum WalletHoldStatus {
 
 // --- USER & AUTHENTICATION ---
 model User {
-  id                  String                @id @default(uuid())
+  id                  String                @id @default(uuid()) @postgres.Uuid
   clerkId             String                @unique
   role                UserRole              @default(USER)
   email               String                @unique
