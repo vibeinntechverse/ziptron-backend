@@ -7,6 +7,8 @@ import { clerkMiddleware } from '@clerk/express'
 
 import PostgresConfig from "./config/postgres.config";
 import MongoConfig from "./config/mongo.config";
+import webhookRoutes from "./routes/webhook.routes";
+
 
 dotenv.config();
 
@@ -39,6 +41,17 @@ app.use((req, res, next) => {
   if (req.method === "OPTIONS") return res.sendStatus(204);
   next();
 });
+
+
+/* ======================================================
+   WEBHOOKS (RAW BODY)
+====================================================== */
+app.use(
+  "/api/v1/webhooks",
+  express.raw({ type: "application/json" }),
+  webhookRoutes
+);
+
 
 /* ======================================================
    SECURITY & LOGGING

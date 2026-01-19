@@ -24,7 +24,10 @@ export const VehicleType = {
   HATCHBACK: 'HATCHBACK',
   SUV: 'SUV',
   CROSSOVER: 'CROSSOVER',
-  COUPE: 'COUPE'
+  COUPE: 'COUPE',
+  CONVERTIBLE: 'CONVERTIBLE',
+  VAN: 'VAN',
+  MPV: 'MPV'
 } as const
 
 export type VehicleType = (typeof VehicleType)[keyof typeof VehicleType]

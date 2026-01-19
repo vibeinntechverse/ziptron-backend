@@ -2444,6 +2444,7 @@ export const StationReviewScalarFieldEnum = {
   userId: 'userId',
   stationId: 'stationId',
   rating: 'rating',
+  media: 'media',
   comment: 'comment',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

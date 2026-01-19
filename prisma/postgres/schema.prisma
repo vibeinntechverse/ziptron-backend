@@ -27,6 +27,9 @@ enum VehicleType {
   SUV
   CROSSOVER
   COUPE
+  CONVERTIBLE
+  VAN
+  MPV
 }
 
 enum ChargingSessionStatus {
@@ -127,7 +130,7 @@ enum WalletHoldStatus {
 
 // --- USER & AUTHENTICATION ---
 model User {
-  id                  String                @id @default(uuid()) @postgres.Uuid
+  id                  String                @id @default(dbgenerated("gen_random_uuid()")) @postgres.Uuid
   clerkId             String                @unique
   role                UserRole              @default(USER)
   email               String                @unique
@@ -177,6 +180,7 @@ model VehicleCatalog {
   @@index([brand, model, year])
   @@index([vehicleType, isActive])
   @@index([isActive])
+  @@unique([brand, model, year], name: "unique_vehicle_per_year")
   @@map("vehicle_catalog")
 }
 
@@ -534,6 +538,7 @@ model StationReview {
   userId      String          @postgres.Uuid
   stationId   String          @postgres.Uuid
   rating      Int             @postgres.SmallInt
+  media       String
   comment     String?         @postgres.Text
   createdAt   DateTime        @default(now()) @postgres.Timestamptz(3)
   updatedAt   DateTime        @updatedAt @postgres.Timestamptz(3)

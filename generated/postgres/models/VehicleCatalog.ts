@@ -276,6 +276,7 @@ export type VehicleCatalogOrderByWithRelationInput = {
 
 export type VehicleCatalogWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  unique_vehicle_per_year?: Prisma.VehicleCatalogUnique_vehicle_per_yearCompoundUniqueInput
   AND?: Prisma.VehicleCatalogWhereInput | Prisma.VehicleCatalogWhereInput[]
   OR?: Prisma.VehicleCatalogWhereInput[]
   NOT?: Prisma.VehicleCatalogWhereInput | Prisma.VehicleCatalogWhereInput[]
@@ -289,7 +290,7 @@ export type VehicleCatalogWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"VehicleCatalog"> | Date | string
   vehicles?: Prisma.UserVehicleListRelationFilter
   connectors?: Prisma.VehicleConnectorSupportListRelationFilter
-}, "id">
+}, "id" | "unique_vehicle_per_year">
 
 export type VehicleCatalogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -410,6 +411,12 @@ export type VehicleCatalogUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type VehicleCatalogUnique_vehicle_per_yearCompoundUniqueInput = {
+  brand: string
+  model: string
+  year: number
 }
 
 export type VehicleCatalogCountOrderByAggregateInput = {

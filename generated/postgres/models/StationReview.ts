@@ -39,6 +39,7 @@ export type StationReviewMinAggregateOutputType = {
   userId: string | null
   stationId: string | null
   rating: number | null
+  media: string | null
   comment: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -49,6 +50,7 @@ export type StationReviewMaxAggregateOutputType = {
   userId: string | null
   stationId: string | null
   rating: number | null
+  media: string | null
   comment: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -59,6 +61,7 @@ export type StationReviewCountAggregateOutputType = {
   userId: number
   stationId: number
   rating: number
+  media: number
   comment: number
   createdAt: number
   updatedAt: number
@@ -79,6 +82,7 @@ export type StationReviewMinAggregateInputType = {
   userId?: true
   stationId?: true
   rating?: true
+  media?: true
   comment?: true
   createdAt?: true
   updatedAt?: true
@@ -89,6 +93,7 @@ export type StationReviewMaxAggregateInputType = {
   userId?: true
   stationId?: true
   rating?: true
+  media?: true
   comment?: true
   createdAt?: true
   updatedAt?: true
@@ -99,6 +104,7 @@ export type StationReviewCountAggregateInputType = {
   userId?: true
   stationId?: true
   rating?: true
+  media?: true
   comment?: true
   createdAt?: true
   updatedAt?: true
@@ -196,6 +202,7 @@ export type StationReviewGroupByOutputType = {
   userId: string
   stationId: string
   rating: number
+  media: string
   comment: string | null
   createdAt: Date
   updatedAt: Date
@@ -229,6 +236,7 @@ export type StationReviewWhereInput = {
   userId?: Prisma.UuidFilter<"StationReview"> | string
   stationId?: Prisma.UuidFilter<"StationReview"> | string
   rating?: Prisma.IntFilter<"StationReview"> | number
+  media?: Prisma.StringFilter<"StationReview"> | string
   comment?: Prisma.StringNullableFilter<"StationReview"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StationReview"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StationReview"> | Date | string
@@ -241,6 +249,7 @@ export type StationReviewOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   stationId?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  media?: Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -257,6 +266,7 @@ export type StationReviewWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.UuidFilter<"StationReview"> | string
   stationId?: Prisma.UuidFilter<"StationReview"> | string
   rating?: Prisma.IntFilter<"StationReview"> | number
+  media?: Prisma.StringFilter<"StationReview"> | string
   comment?: Prisma.StringNullableFilter<"StationReview"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StationReview"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StationReview"> | Date | string
@@ -269,6 +279,7 @@ export type StationReviewOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   stationId?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  media?: Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -287,6 +298,7 @@ export type StationReviewScalarWhereWithAggregatesInput = {
   userId?: Prisma.UuidWithAggregatesFilter<"StationReview"> | string
   stationId?: Prisma.UuidWithAggregatesFilter<"StationReview"> | string
   rating?: Prisma.IntWithAggregatesFilter<"StationReview"> | number
+  media?: Prisma.StringWithAggregatesFilter<"StationReview"> | string
   comment?: Prisma.StringNullableWithAggregatesFilter<"StationReview"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StationReview"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StationReview"> | Date | string
@@ -295,6 +307,7 @@ export type StationReviewScalarWhereWithAggregatesInput = {
 export type StationReviewCreateInput = {
   id?: string
   rating: number
+  media: string
   comment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -307,6 +320,7 @@ export type StationReviewUncheckedCreateInput = {
   userId: string
   stationId: string
   rating: number
+  media: string
   comment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -315,6 +329,7 @@ export type StationReviewUncheckedCreateInput = {
 export type StationReviewUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -327,6 +342,7 @@ export type StationReviewUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   stationId?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -337,6 +353,7 @@ export type StationReviewCreateManyInput = {
   userId: string
   stationId: string
   rating: number
+  media: string
   comment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -345,6 +362,7 @@ export type StationReviewCreateManyInput = {
 export type StationReviewUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -355,6 +373,7 @@ export type StationReviewUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   stationId?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -380,6 +399,7 @@ export type StationReviewCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   stationId?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  media?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -394,6 +414,7 @@ export type StationReviewMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   stationId?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  media?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -404,6 +425,7 @@ export type StationReviewMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   stationId?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  media?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -500,6 +522,7 @@ export type StationReviewUncheckedUpdateManyWithoutStationNestedInput = {
 export type StationReviewCreateWithoutUserInput = {
   id?: string
   rating: number
+  media: string
   comment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -510,6 +533,7 @@ export type StationReviewUncheckedCreateWithoutUserInput = {
   id?: string
   stationId: string
   rating: number
+  media: string
   comment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -549,6 +573,7 @@ export type StationReviewScalarWhereInput = {
   userId?: Prisma.UuidFilter<"StationReview"> | string
   stationId?: Prisma.UuidFilter<"StationReview"> | string
   rating?: Prisma.IntFilter<"StationReview"> | number
+  media?: Prisma.StringFilter<"StationReview"> | string
   comment?: Prisma.StringNullableFilter<"StationReview"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StationReview"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StationReview"> | Date | string
@@ -557,6 +582,7 @@ export type StationReviewScalarWhereInput = {
 export type StationReviewCreateWithoutStationInput = {
   id?: string
   rating: number
+  media: string
   comment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -567,6 +593,7 @@ export type StationReviewUncheckedCreateWithoutStationInput = {
   id?: string
   userId: string
   rating: number
+  media: string
   comment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -602,6 +629,7 @@ export type StationReviewCreateManyUserInput = {
   id?: string
   stationId: string
   rating: number
+  media: string
   comment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -610,6 +638,7 @@ export type StationReviewCreateManyUserInput = {
 export type StationReviewUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -620,6 +649,7 @@ export type StationReviewUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stationId?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -629,6 +659,7 @@ export type StationReviewUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stationId?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -638,6 +669,7 @@ export type StationReviewCreateManyStationInput = {
   id?: string
   userId: string
   rating: number
+  media: string
   comment?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -646,6 +678,7 @@ export type StationReviewCreateManyStationInput = {
 export type StationReviewUpdateWithoutStationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -656,6 +689,7 @@ export type StationReviewUncheckedUpdateWithoutStationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -665,6 +699,7 @@ export type StationReviewUncheckedUpdateManyWithoutStationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.StringFieldUpdateOperationsInput | string
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -677,6 +712,7 @@ export type StationReviewSelect<ExtArgs extends runtime.Types.Extensions.Interna
   userId?: boolean
   stationId?: boolean
   rating?: boolean
+  media?: boolean
   comment?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -689,6 +725,7 @@ export type StationReviewSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   userId?: boolean
   stationId?: boolean
   rating?: boolean
+  media?: boolean
   comment?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -701,6 +738,7 @@ export type StationReviewSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   userId?: boolean
   stationId?: boolean
   rating?: boolean
+  media?: boolean
   comment?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -713,12 +751,13 @@ export type StationReviewSelectScalar = {
   userId?: boolean
   stationId?: boolean
   rating?: boolean
+  media?: boolean
   comment?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StationReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "stationId" | "rating" | "comment" | "createdAt" | "updatedAt", ExtArgs["result"]["stationReview"]>
+export type StationReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "stationId" | "rating" | "media" | "comment" | "createdAt" | "updatedAt", ExtArgs["result"]["stationReview"]>
 export type StationReviewInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   station?: boolean | Prisma.ChargingStationDefaultArgs<ExtArgs>
@@ -743,6 +782,7 @@ export type $StationReviewPayload<ExtArgs extends runtime.Types.Extensions.Inter
     userId: string
     stationId: string
     rating: number
+    media: string
     comment: string | null
     createdAt: Date
     updatedAt: Date
@@ -1175,6 +1215,7 @@ export interface StationReviewFieldRefs {
   readonly userId: Prisma.FieldRef<"StationReview", 'String'>
   readonly stationId: Prisma.FieldRef<"StationReview", 'String'>
   readonly rating: Prisma.FieldRef<"StationReview", 'Int'>
+  readonly media: Prisma.FieldRef<"StationReview", 'String'>
   readonly comment: Prisma.FieldRef<"StationReview", 'String'>
   readonly createdAt: Prisma.FieldRef<"StationReview", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"StationReview", 'DateTime'>

@@ -1,0 +1,749 @@
+{
+  "Tata": [
+    {
+      "model": "Tigor EV (Fleet)",
+      "year": 2018,
+      "battery_capacity": 16.2,
+      "type": "SEDAN",
+      "connectors": ["GB_T"]
+    },
+    {
+      "model": "Tigor EV (Extended Range)",
+      "year": 2019,
+      "battery_capacity": 21.5,
+      "type": "SEDAN",
+      "connectors": ["GB_T"]
+    },
+    {
+      "model": "XPRES-T 165",
+      "year": 2021,
+      "battery_capacity": 16.5,
+      "type": "SEDAN",
+      "connectors": ["GB_T"]
+    },
+    {
+      "model": "XPRES-T 213",
+      "year": 2021,
+      "battery_capacity": 21.5,
+      "type": "SEDAN",
+      "connectors": ["GB_T"]
+    },
+    {
+      "model": "Tigor EV Ziptron",
+      "year": 2021,
+      "battery_capacity": 26.0,
+      "type": "SEDAN",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Nexon EV",
+      "year": 2020,
+      "battery_capacity": 30.2,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Nexon EV Prime",
+      "year": 2022,
+      "battery_capacity": 30.2,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Nexon EV Max",
+      "year": 2022,
+      "battery_capacity": 40.5,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Nexon EV Facelift (MR)",
+      "year": 2023,
+      "battery_capacity": 30.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Nexon EV Facelift (LR)",
+      "year": 2023,
+      "battery_capacity": 40.5,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Nexon EV 45",
+      "year": 2024,
+      "battery_capacity": 45.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Tiago EV (Standard Range)",
+      "year": 2022,
+      "battery_capacity": 19.2,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Tiago EV (Long Range)",
+      "year": 2022,
+      "battery_capacity": 24.0,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Punch EV MR",
+      "year": 2024,
+      "battery_capacity": 25.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Punch EV LR",
+      "year": 2024,
+      "battery_capacity": 35.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Curvv EV MR",
+      "year": 2024,
+      "battery_capacity": 45.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Curvv EV LR",
+      "year": 2024,
+      "battery_capacity": 55.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Harrier EV",
+      "year": 2025,
+      "battery_capacity": 65.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Harrier EV AWD",
+      "year": 2025,
+      "battery_capacity": 75.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Sierra EV",
+      "year": 2026,
+      "battery_capacity": 65.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "Mahindra": [
+    {
+      "model": "e2o",
+      "year": 2013,
+      "battery_capacity": 11.0,
+      "type": "HATCHBACK",
+      "connectors": ["IEC60309", "GB_T"]
+    },
+    {
+      "model": "e2o Premium",
+      "year": 2014,
+      "battery_capacity": 11.0,
+      "type": "HATCHBACK",
+      "connectors": ["GB_T"]
+    },
+    {
+      "model": "e2o Plus P4",
+      "year": 2016,
+      "battery_capacity": 10.1,
+      "type": "HATCHBACK",
+      "connectors": ["IEC60309", "GB_T"]
+    },
+    {
+      "model": "e2o Plus P6",
+      "year": 2016,
+      "battery_capacity": 11.0,
+      "type": "HATCHBACK",
+      "connectors": ["GB_T"]
+    },
+    {
+      "model": "e2o Plus P8",
+      "year": 2016,
+      "battery_capacity": 15.1,
+      "type": "HATCHBACK",
+      "connectors": ["IEC60309", "GB_T"]
+    },
+    {
+      "model": "eVerito D2/D4",
+      "year": 2016,
+      "battery_capacity": 18.55,
+      "type": "SEDAN",
+      "connectors": ["TYPE2", "GB_T"]
+    },
+    {
+      "model": "eVerito D6",
+      "year": 2016,
+      "battery_capacity": 18.55,
+      "type": "SEDAN",
+      "connectors": ["GB_T"]
+    },
+    {
+      "model": "eSupro Passenger",
+      "year": 2016,
+      "battery_capacity": 14.4,
+      "type": "VAN",
+      "connectors": ["TYPE2"]
+    },
+    {
+      "model": "XUV400 EV",
+      "year": 2023,
+      "battery_capacity": 39.4,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "XUV 3XO EV",
+      "year": 2026,
+      "battery_capacity": 34.5,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "MG": [
+    {
+      "model": "ZS EV",
+      "year": 2020,
+      "battery_capacity": 44.5,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "ZS EV Facelift",
+      "year": 2022,
+      "battery_capacity": 50.3,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Comet EV",
+      "year": 2023,
+      "battery_capacity": 17.3,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2"]
+    },
+    {
+      "model": "Windsor EV",
+      "year": 2024,
+      "battery_capacity": 38.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Windsor EV LR",
+      "year": 2024,
+      "battery_capacity": 52.9,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Cyberster",
+      "year": 2025,
+      "battery_capacity": 77.0,
+      "type": "CONVERTIBLE",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "M9",
+      "year": 2025,
+      "battery_capacity": 90.0,
+      "type": "MPV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "BYD": [
+    {
+      "model": "e6 GL",
+      "year": 2021,
+      "battery_capacity": 71.7,
+      "type": "MPV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Atto 3 Superior",
+      "year": 2022,
+      "battery_capacity": 60.48,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Atto 3 Dynamic",
+      "year": 2024,
+      "battery_capacity": 49.92,
+      "type": "CROSSOVER",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Seal Dynamic",
+      "year": 2024,
+      "battery_capacity": 61.44,
+      "type": "SEDAN",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Seal Premium",
+      "year": 2024,
+      "battery_capacity": 82.56,
+      "type": "SEDAN",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "eMAX 7 Premium",
+      "year": 2024,
+      "battery_capacity": 55.4,
+      "type": "MPV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "eMAX 7 Superior",
+      "year": 2024,
+      "battery_capacity": 71.8,
+      "type": "MPV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Sealion 7",
+      "year": 2025,
+      "battery_capacity": 82.56,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "Hyundai": [
+    {
+      "model": "Kona Electric",
+      "year": 2019,
+      "battery_capacity": 39.2,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Ioniq 5",
+      "year": 2023,
+      "battery_capacity": 72.6,
+      "type": "CROSSOVER",
+      "connectors": ["TYPE2", "CCS2"]
+    }
+  ],
+  "Kia": [
+    {
+      "model": "EV6",
+      "year": 2022,
+      "battery_capacity": 77.4,
+      "type": "CROSSOVER",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Carens Clavis EV",
+      "year": 2026,
+      "battery_capacity": 45.0,
+      "type": "MPV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "Mercedes-Benz": [
+    {
+      "model": "EQC 400",
+      "year": 2020,
+      "battery_capacity": 80.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "EQS 580",
+      "year": 2022,
+      "battery_capacity": 107.8,
+      "type": "SEDAN",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "EQB 300",
+      "year": 2022,
+      "battery_capacity": 66.5,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "EQB 350",
+      "year": 2023,
+      "battery_capacity": 70.5,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "EQE 500 SUV",
+      "year": 2023,
+      "battery_capacity": 90.56,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "EQA 250+",
+      "year": 2024,
+      "battery_capacity": 70.5,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "EQS 450 SUV",
+      "year": 2024,
+      "battery_capacity": 118.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "EQS 580 SUV",
+      "year": 2024,
+      "battery_capacity": 122.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "G 580 (Electric G)",
+      "year": 2025,
+      "battery_capacity": 116.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "BMW": [
+    {
+      "model": "i3",
+      "year": 2015,
+      "battery_capacity": 22.0,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "i3",
+      "year": 2017,
+      "battery_capacity": 33.0,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "iX xDrive40",
+      "year": 2021,
+      "battery_capacity": 76.6,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "i4 eDrive40",
+      "year": 2022,
+      "battery_capacity": 83.9,
+      "type": "SEDAN",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "i7 xDrive60",
+      "year": 2023,
+      "battery_capacity": 101.7,
+      "type": "SEDAN",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "iX1 xDrive30",
+      "year": 2023,
+      "battery_capacity": 66.4,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "iX",
+      "year": 2023,
+      "battery_capacity": 105.2,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "iX xDrive50",
+      "year": 2024,
+      "battery_capacity": 111.5,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "i5 M60",
+      "year": 2024,
+      "battery_capacity": 81.2,
+      "type": "SEDAN",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "Audi": [
+    {
+      "model": "e-tron 50",
+      "year": 2021,
+      "battery_capacity": 71.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "e-tron 55",
+      "year": 2021,
+      "battery_capacity": 95.0,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "RS e-tron GT",
+      "year": 2021,
+      "battery_capacity": 93.4,
+      "type": "SEDAN",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "e-tron GT",
+      "year": 2022,
+      "battery_capacity": 93.0,
+      "type": "COUPE",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Q8 e-tron 50",
+      "year": 2023,
+      "battery_capacity": 95.0,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Q8 e-tron 55",
+      "year": 2023,
+      "battery_capacity": 114.0,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Q8 50 e-tron Sportback",
+      "year": 2023,
+      "battery_capacity": 95.0,
+      "type": "CROSSOVER",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Q8 55 e-tron Sportback",
+      "year": 2023,
+      "battery_capacity": 114.0,
+      "type": "CROSSOVER",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "e-tron Sportback",
+      "year": 2020,
+      "battery_capacity": 95.0,
+      "type": "CROSSOVER",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Q6 e-tron",
+      "year": 2026,
+      "battery_capacity": 94.9,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "Porsche": [
+    {
+      "model": "Taycan 4S",
+      "year": 2021,
+      "battery_capacity": 79.2,
+      "type": "SEDAN",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Taycan Turbo S",
+      "year": 2021,
+      "battery_capacity": 93.4,
+      "type": "SEDAN",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Taycan Cross Turismo",
+      "year": 2021,
+      "battery_capacity": 79.2,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Taycan Cross Turismo",
+      "year": 2021,
+      "battery_capacity": 93.4,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "Taycan GTS",
+      "year": 2022,
+      "battery_capacity": 93.4,
+      "type": "SEDAN",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Macan Electric",
+      "year": 2024,
+      "battery_capacity": 100.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "Jaguar": [
+    {
+      "model": "I-Pace",
+      "year": 2021,
+      "battery_capacity": 90.0,
+      "type": "CROSSOVER",
+      "connectors": ["TYPE2", "CCS2"]
+    }
+  ],
+  "Volvo": [
+    {
+      "model": "XC40 Recharge",
+      "year": 2022,
+      "battery_capacity": 78.0,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "C40 Recharge",
+      "year": 2023,
+      "battery_capacity": 78.0,
+      "type": "CROSSOVER",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "EX30",
+      "year": 2025,
+      "battery_capacity": 69.0,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    },
+    {
+      "model": "EX90",
+      "year": 2024,
+      "battery_capacity": 111.0,
+      "type": "SUV",
+      "connectors": ["TYPE2", "CCS2"]
+    }
+  ],
+  "Mini": [
+    {
+      "model": "Cooper SE",
+      "year": 2022,
+      "battery_capacity": 32.6,
+      "type": "HATCHBACK",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Countryman EV",
+      "year": 2024,
+      "battery_capacity": 66.45,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "Rolls-Royce": [
+    {
+      "model": "Spectre",
+      "year": 2024,
+      "battery_capacity": 102.0,
+      "type": "COUPE",
+      "connectors": ["TYPE2", "CCS2"]
+    }
+  ],
+  "Lotus": [
+    {
+      "model": "Eletre",
+      "year": 2024,
+      "battery_capacity": 112.0,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    },
+    {
+      "model": "Emeya",
+      "year": 2025,
+      "battery_capacity": 102.0,
+      "type": "SEDAN",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "Lexus": [
+    {
+      "model": "UX 300e",
+      "year": 2021,
+      "battery_capacity": 54.3,
+      "type": "SUV",
+      "connectors": ["CHADEMO"]
+    },
+    {
+      "model": "RZ 450e",
+      "year": 2025,
+      "battery_capacity": 71.4,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "PMV": [
+    {
+      "model": "EaS-E",
+      "year": 2023,
+      "battery_capacity": 10.0,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2"]
+    }
+  ],
+  "Vayve Mobility": [
+    {
+      "model": "Eva",
+      "year": 2024,
+      "battery_capacity": 14.0,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2"]
+    }
+  ],
+  "VinFast": [
+    {
+      "model": "VF6",
+      "year": 2026,
+      "battery_capacity": 59.6,
+      "type": "SUV",
+      "connectors": ["CCS2"]
+    }
+  ],
+  "Reva": [
+    {
+      "model": "Standard (Lead-Acid)",
+      "year": 2001,
+      "battery_capacity": 9.6,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2"]
+    },
+    {
+      "model": "REVAi (Lead-Acid)",
+      "year": 2008,
+      "battery_capacity": 9.6,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2"]
+    },
+    {
+      "model": "Reva L-ion",
+      "year": 2009,
+      "battery_capacity": 11.0,
+      "type": "HATCHBACK",
+      "connectors": ["TYPE2"]
+    }
+  ]
+}
