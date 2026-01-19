@@ -1,0 +1,158 @@
+// ======================================================
+// GENERATOR & DATASOURCE (MongoDB) - OPTIMIZED
+// ======================================================
+generator mongo_client {
+  provider = "prisma-client-js"
+  output   = "../../generated/mongo"
+}
+
+datasource mongo {
+  provider = "mongodb"
+  url      = env("DATABASE_URL_MONGO")
+}
+
+// --- AUDIT LOGS ---
+model AuditLog {
+  id         String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  entityType String // USER, VEHICLE, SESSION, STATION, TRANSACTION, etc.
+  entityId   String // The UUID string from Postgres
+  action     String // CREATED, UPDATED, DELETED, STATUS_CHANGED
+  changes    Json? // Store before/after snapshots
+  userId     String? // Who performed the action (Postgres User ID)
+  metadata   Json? // Additional context (IP, user agent, etc.)
+  createdAt  DateTime @default(now())
+
+  // Compound indexes for efficient queries
+  @@index([entityType, entityId, createdAt(sort: Desc)])
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([createdAt(sort: Desc)])
+  @@index([action, createdAt(sort: Desc)])
+  @@map("audit_logs")
+}
+
+// --- CHAT MESSAGES ---
+model ChatMessage {
+  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  sessionId String // Postgres ChatSession UUID
+  sender    String // USER, AI, SUPPORT
+  message   String
+  metadata  Json? // Attachments, mentions, formatting
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  // Optimized indexes for chat retrieval
+  @@index([sessionId, createdAt(sort: Asc)])
+  @@index([sessionId, isRead])
+  @@index([createdAt(sort: Desc)])
+  @@map("chat_messages")
+}
+
+// --- LIVE TELEMETRY ---
+model TelemetryLog {
+  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  sessionId String // Postgres ChargingSession UUID
+  gunId     String // Postgres ChargingGun UUID
+  voltage   Float
+  current   Float
+  power     Float // Calculated power (V * A)
+  soc       Int // State of Charge %
+  temp      Float? // Gun Temperature
+  errorCode String? // Any error/warning codes
+  timestamp DateTime @default(now())
+
+  @@index([timestamp], map: "ttl_index")
+  // Query indexes
+  @@index([sessionId, timestamp(sort: Desc)])
+  @@index([gunId, timestamp(sort: Desc)])
+  @@index([sessionId, soc]) // For SoC tracking
+  @@map("telemetry_logs")
+}
+
+// --- ANALYTICS & AGGREGATIONS ---
+// Pre-aggregated data for dashboards and reports
+model SessionAnalytics {
+  id        String @id @default(auto()) @map("_id") @mongo.ObjectId
+  sessionId String @unique // Postgres ChargingSession UUID
+  userId    String // Postgres User ID
+  stationId String // Postgres Station ID
+  gunId     String // Postgres Gun ID
+
+  // Session metrics
+  duration   Int // Duration in seconds
+  energyUsed Float
+  avgPower   Float
+  peakPower  Float
+  avgVoltage Float
+  avgCurrent Float
+  avgTemp    Float?
+
+  // Efficiency metrics
+  efficiencyScore Float? // Custom efficiency calculation
+  errorCount      Int    @default(0)
+
+  // Time data
+  startTime DateTime
+  endTime   DateTime
+  createdAt DateTime @default(now())
+
+  // Indexes for analytics queries
+  @@index([userId, startTime(sort: Desc)])
+  @@index([stationId, startTime(sort: Desc)])
+  @@index([gunId, startTime(sort: Desc)])
+  @@index([startTime(sort: Desc)])
+  @@index([energyUsed(sort: Desc)]) // For leaderboards
+  @@map("session_analytics")
+}
+
+// --- NOTIFICATIONS ---
+// Store notification history and preferences
+model Notification {
+  id        String    @id @default(auto()) @map("_id") @mongo.ObjectId
+  userId    String // Postgres User ID
+  type      String // SESSION_COMPLETE, LOW_BATTERY, PROMOTION, etc.
+  title     String
+  message   String
+  data      Json? // Additional payload
+  isRead    Boolean   @default(false)
+  isSent    Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  readAt    DateTime?
+  sentAt    DateTime?
+
+  // Indexes for notification management
+  @@index([userId, isRead, createdAt(sort: Desc)])
+  @@index([userId, type, createdAt(sort: Desc)])
+  @@index([isSent, createdAt(sort: Asc)]) // For batch sending
+  @@map("notifications")
+}
+
+// --- RATE LIMITING ---
+// Track API usage and rate limits
+model RateLimit {
+  id          String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  key         String   @unique // userId:endpoint or ip:endpoint
+  count       Int      @default(1)
+  windowStart DateTime
+  expiresAt   DateTime
+
+  // TTL index - auto-cleanup
+  @@index([expiresAt], map: "rate_limit_ttl")
+  @@map("rate_limits")
+}
+
+// --- SEARCH HISTORY ---
+// Store user search patterns for recommendations
+model SearchHistory {
+  id          String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  userId      String // Postgres User ID
+  query       String
+  filters     Json? // Applied filters
+  resultCount Int
+  timestamp   DateTime @default(now())
+
+  // Indexes for analytics and recommendations
+  @@index([userId, timestamp(sort: Desc)])
+  @@index([query]) // For popular searches
+  @@index([timestamp(sort: Desc)])
+  @@map("search_history")
+}
