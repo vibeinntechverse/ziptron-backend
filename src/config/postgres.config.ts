@@ -1,7 +1,8 @@
-import { PrismaClient } from "../../generated/postgres/client";
+import { PrismaClient } from '../../generated/postgres/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 import { getEnv } from './env.config';
+import { logger } from '../utils/logger.util';
 
 /**
  * Global prisma reference (DEV only)
@@ -24,13 +25,15 @@ class DatabaseConfig {
       return DatabaseConfig.instance;
     }
 
-    // ♻️ Reuse Prisma instance in development (Hot Reload safe)
+    // ♻️ Hot reload safe (DEV)
     if (getEnv.isDevelopment() && globalForPrisma.prismaPg) {
+      logger.debug('Reusing global Prisma PostgreSQL instance (DEV)');
       DatabaseConfig.instance = globalForPrisma.prismaPg;
       return DatabaseConfig.instance;
     }
 
-    // 🔌 Create PostgreSQL pool
+    logger.info('Creating PostgreSQL pool');
+
     const pool = new Pool({
       connectionString: process.env.DATABASE_URL_POSTGRES,
       max: 10,
@@ -38,15 +41,26 @@ class DatabaseConfig {
       connectionTimeoutMillis: 10_000,
     });
 
-    // 🔗 Prisma PG Adapter (Prisma 7 pattern)
     const adapter = new PrismaPg(pool);
 
     const prisma = new PrismaClient({
       adapter,
-      log: getEnv.isDevelopment()
-        ? ['query', 'warn', 'error']
-        : ['error'],
+      log: [
+        { level: 'warn', emit: 'event' },
+        { level: 'error', emit: 'event' },
+      ],
       errorFormat: 'pretty',
+    });
+
+    prisma.$on('warn', (e) => {
+      logger.warn('Prisma warning', { message: e.message });
+    });
+
+    prisma.$on('error', (e) => {
+      logger.error('Prisma error', {
+        message: e.message,
+        target: e.target,
+      });
     });
 
     if (getEnv.isDevelopment()) {
@@ -62,14 +76,15 @@ class DatabaseConfig {
    */
   public static async connect(): Promise<void> {
     if (DatabaseConfig.isConnected) {
+      logger.debug('PostgreSQL already connected');
       return;
     }
 
     const prisma = DatabaseConfig.getInstance();
     await prisma.$connect();
-    DatabaseConfig.isConnected = true;
 
-    console.log('✅ PostgreSQL connected (Prisma 7)');
+    DatabaseConfig.isConnected = true;
+    logger.info('PostgreSQL connected (Prisma 7)');
   }
 
   /**
@@ -77,6 +92,7 @@ class DatabaseConfig {
    */
   public static async disconnect(): Promise<void> {
     if (!DatabaseConfig.instance || !DatabaseConfig.isConnected) {
+      logger.debug('PostgreSQL disconnect skipped (not connected)');
       return;
     }
 
@@ -88,7 +104,7 @@ class DatabaseConfig {
     }
 
     DatabaseConfig.instance = null;
-    console.log('🔌 PostgreSQL disconnected');
+    logger.info('PostgreSQL disconnected');
   }
 
   /**
@@ -99,20 +115,10 @@ class DatabaseConfig {
       const prisma = DatabaseConfig.getInstance();
       await prisma.$queryRaw`SELECT 1`;
       return true;
-    } catch (err) {
-      console.error('❌ DB health check failed', err);
+    } catch (error) {
+      logger.error('PostgreSQL health check failed', { error });
       return false;
     }
-  }
-
-  /**
-   * Raw SQL (debug / admin only)
-   */
-  public static async executeRaw<T = unknown>(
-    query: string,
-  ): Promise<T> {
-    const prisma = DatabaseConfig.getInstance();
-    return prisma.$queryRawUnsafe<T>(query);
   }
 
   /**
@@ -129,7 +135,7 @@ class DatabaseConfig {
       globalForPrisma.prismaPg = undefined;
     }
 
-    console.log('🧹 Prisma PostgreSQL instance force cleaned');
+    logger.warn('Prisma PostgreSQL instance force cleaned');
   }
 }
 

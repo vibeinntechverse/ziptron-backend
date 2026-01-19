@@ -1,5 +1,6 @@
 import { PrismaClient } from '../../generated/mongo';
 import { getEnv } from './env.config';
+import { logger } from '../utils/logger.util';
 
 /**
  * Global Mongo Prisma reference (DEV only)
@@ -24,15 +25,15 @@ class MongoDatabaseConfig {
 
     // ♻️ Hot reload safe (DEV)
     if (getEnv.isDevelopment() && globalForMongo.prismaMongo) {
+      logger.debug('Reusing global Mongo Prisma instance (DEV)');
       MongoDatabaseConfig.instance = globalForMongo.prismaMongo;
       return MongoDatabaseConfig.instance;
     }
 
-    // ✅ MongoDB Prisma Client (NO adapter, NO datasourceUrl)
+    logger.info('Creating new Mongo Prisma client');
+
     const prisma = new PrismaClient({
-      log: getEnv.isDevelopment()
-        ? ['warn', 'error']
-        : ['error'],
+      log: getEnv.isDevelopment() ? ['warn', 'error'] : ['error'],
       errorFormat: 'pretty',
     });
 
@@ -48,13 +49,16 @@ class MongoDatabaseConfig {
    * Explicit connect
    */
   public static async connect(): Promise<void> {
-    if (MongoDatabaseConfig.isConnected) return;
+    if (MongoDatabaseConfig.isConnected) {
+      logger.debug('MongoDB already connected');
+      return;
+    }
 
     const prisma = MongoDatabaseConfig.getInstance();
     await prisma.$connect();
-    MongoDatabaseConfig.isConnected = true;
 
-    console.log('✅ MongoDB connected (Prisma 7)');
+    MongoDatabaseConfig.isConnected = true;
+    logger.info('MongoDB connected (Prisma Mongo)');
   }
 
   /**
@@ -62,6 +66,7 @@ class MongoDatabaseConfig {
    */
   public static async disconnect(): Promise<void> {
     if (!MongoDatabaseConfig.instance || !MongoDatabaseConfig.isConnected) {
+      logger.debug('MongoDB disconnect skipped (not connected)');
       return;
     }
 
@@ -73,7 +78,7 @@ class MongoDatabaseConfig {
     }
 
     MongoDatabaseConfig.instance = null;
-    console.log('🔌 MongoDB disconnected');
+    logger.info('MongoDB disconnected');
   }
 
   /**
@@ -85,7 +90,7 @@ class MongoDatabaseConfig {
       await prisma.$runCommandRaw({ ping: 1 });
       return true;
     } catch (error) {
-      console.error('❌ MongoDB health check failed', error);
+      logger.error('MongoDB health check failed', { error });
       return false;
     }
   }
@@ -104,7 +109,7 @@ class MongoDatabaseConfig {
       globalForMongo.prismaMongo = undefined;
     }
 
-    console.log('🧹 Mongo Prisma instance force cleaned');
+    logger.warn('Mongo Prisma instance force cleaned');
   }
 
   public static getConnectionStatus(): boolean {

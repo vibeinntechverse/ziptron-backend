@@ -2195,6 +2195,7 @@ export const VehicleCatalogScalarFieldEnum = {
   year: 'year',
   batteryCapacity: 'batteryCapacity',
   vehicleType: 'vehicleType',
+  imageUrl: 'imageUrl',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

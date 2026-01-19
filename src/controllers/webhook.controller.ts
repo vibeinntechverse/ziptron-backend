@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
 import ClerkConfig from '../config/clerk.config';
+import { logger } from '../utils/logger.util';
 
 export class WebhookController {
   /**
@@ -8,7 +9,7 @@ export class WebhookController {
    */
   static async handleClerkWebhook(req: Request, res: Response) {
     try {
-      console.log('📥 Clerk webhook received');
+      logger.info('Clerk webhook received');
 
       const payload = req.body;
       const headers = req.headers as Record<string, string>;
@@ -17,6 +18,7 @@ export class WebhookController {
       const evt = await ClerkConfig.verifyWebhook(payload, headers);
 
       if (!evt) {
+        logger.warn('Invalid Clerk webhook signature');
         return res.status(401).json({
           success: false,
           message: 'Invalid webhook signature',
@@ -24,7 +26,11 @@ export class WebhookController {
       }
 
       const { type, data } = evt as any;
-      console.log('📋 Event:', type);
+
+      logger.info('Processing Clerk event', {
+        eventType: type,
+        clerkUserId: data?.id,
+      });
 
       switch (type) {
         /**
@@ -32,28 +38,36 @@ export class WebhookController {
          */
         case 'user.created':
           await AuthService.syncClerkUser(data);
-          console.log('✅ User synced');
+          logger.info('Clerk user synced successfully', {
+            clerkUserId: data.id,
+            email: data.email_addresses?.[0]?.email_address,
+          });
           break;
 
         case 'user.updated':
-          // Optional: update email/phone later if needed
-          console.log('ℹ️ User updated (ignored)');
+          logger.info('Clerk user updated (ignored)', {
+            clerkUserId: data.id,
+          });
           break;
 
         case 'user.deleted':
-          // Optional soft-disable if needed
-          console.log('ℹ️ User deleted (ignored)');
+          logger.info('Clerk user deleted (ignored)', {
+            clerkUserId: data.id,
+          });
           break;
 
         default:
-          console.log('ℹ️ Unhandled Clerk event:', type);
+          logger.warn('Unhandled Clerk webhook event', {
+            eventType: type,
+          });
       }
 
-      return res.status(200).json({
-        success: true,
-      });
+      return res.status(200).json({ success: true });
     } catch (error: any) {
-      console.error('❌ Clerk webhook error:', error);
+      logger.error('Clerk webhook processing failed', {
+        error,
+        body: req.body,
+      });
 
       return res.status(500).json({
         success: false,

@@ -45,6 +45,7 @@ export type VehicleCatalogMinAggregateOutputType = {
   year: number | null
   batteryCapacity: number | null
   vehicleType: $Enums.VehicleType | null
+  imageUrl: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -57,6 +58,7 @@ export type VehicleCatalogMaxAggregateOutputType = {
   year: number | null
   batteryCapacity: number | null
   vehicleType: $Enums.VehicleType | null
+  imageUrl: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -69,6 +71,7 @@ export type VehicleCatalogCountAggregateOutputType = {
   year: number
   batteryCapacity: number
   vehicleType: number
+  imageUrl: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -95,6 +98,7 @@ export type VehicleCatalogMinAggregateInputType = {
   year?: true
   batteryCapacity?: true
   vehicleType?: true
+  imageUrl?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -107,6 +111,7 @@ export type VehicleCatalogMaxAggregateInputType = {
   year?: true
   batteryCapacity?: true
   vehicleType?: true
+  imageUrl?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -119,6 +124,7 @@ export type VehicleCatalogCountAggregateInputType = {
   year?: true
   batteryCapacity?: true
   vehicleType?: true
+  imageUrl?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -218,6 +224,7 @@ export type VehicleCatalogGroupByOutputType = {
   year: number
   batteryCapacity: number
   vehicleType: $Enums.VehicleType
+  imageUrl: string | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -253,6 +260,7 @@ export type VehicleCatalogWhereInput = {
   year?: Prisma.IntFilter<"VehicleCatalog"> | number
   batteryCapacity?: Prisma.FloatFilter<"VehicleCatalog"> | number
   vehicleType?: Prisma.EnumVehicleTypeFilter<"VehicleCatalog"> | $Enums.VehicleType
+  imageUrl?: Prisma.StringNullableFilter<"VehicleCatalog"> | string | null
   isActive?: Prisma.BoolFilter<"VehicleCatalog"> | boolean
   createdAt?: Prisma.DateTimeFilter<"VehicleCatalog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VehicleCatalog"> | Date | string
@@ -267,6 +275,7 @@ export type VehicleCatalogOrderByWithRelationInput = {
   year?: Prisma.SortOrder
   batteryCapacity?: Prisma.SortOrder
   vehicleType?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -285,6 +294,7 @@ export type VehicleCatalogWhereUniqueInput = Prisma.AtLeast<{
   year?: Prisma.IntFilter<"VehicleCatalog"> | number
   batteryCapacity?: Prisma.FloatFilter<"VehicleCatalog"> | number
   vehicleType?: Prisma.EnumVehicleTypeFilter<"VehicleCatalog"> | $Enums.VehicleType
+  imageUrl?: Prisma.StringNullableFilter<"VehicleCatalog"> | string | null
   isActive?: Prisma.BoolFilter<"VehicleCatalog"> | boolean
   createdAt?: Prisma.DateTimeFilter<"VehicleCatalog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VehicleCatalog"> | Date | string
@@ -299,6 +309,7 @@ export type VehicleCatalogOrderByWithAggregationInput = {
   year?: Prisma.SortOrder
   batteryCapacity?: Prisma.SortOrder
   vehicleType?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -319,6 +330,7 @@ export type VehicleCatalogScalarWhereWithAggregatesInput = {
   year?: Prisma.IntWithAggregatesFilter<"VehicleCatalog"> | number
   batteryCapacity?: Prisma.FloatWithAggregatesFilter<"VehicleCatalog"> | number
   vehicleType?: Prisma.EnumVehicleTypeWithAggregatesFilter<"VehicleCatalog"> | $Enums.VehicleType
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"VehicleCatalog"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"VehicleCatalog"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"VehicleCatalog"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"VehicleCatalog"> | Date | string
@@ -330,6 +342,7 @@ export type VehicleCatalogCreateInput = {
   year: number
   batteryCapacity: number
   vehicleType: $Enums.VehicleType
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -344,6 +357,7 @@ export type VehicleCatalogUncheckedCreateInput = {
   year: number
   batteryCapacity: number
   vehicleType: $Enums.VehicleType
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -357,6 +371,7 @@ export type VehicleCatalogUpdateInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   batteryCapacity?: Prisma.FloatFieldUpdateOperationsInput | number
   vehicleType?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -371,6 +386,7 @@ export type VehicleCatalogUncheckedUpdateInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   batteryCapacity?: Prisma.FloatFieldUpdateOperationsInput | number
   vehicleType?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -385,6 +401,7 @@ export type VehicleCatalogCreateManyInput = {
   year: number
   batteryCapacity: number
   vehicleType: $Enums.VehicleType
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -396,6 +413,7 @@ export type VehicleCatalogUpdateManyMutationInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   batteryCapacity?: Prisma.FloatFieldUpdateOperationsInput | number
   vehicleType?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -408,6 +426,7 @@ export type VehicleCatalogUncheckedUpdateManyInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   batteryCapacity?: Prisma.FloatFieldUpdateOperationsInput | number
   vehicleType?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -426,6 +445,7 @@ export type VehicleCatalogCountOrderByAggregateInput = {
   year?: Prisma.SortOrder
   batteryCapacity?: Prisma.SortOrder
   vehicleType?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -444,6 +464,7 @@ export type VehicleCatalogMaxOrderByAggregateInput = {
   year?: Prisma.SortOrder
   batteryCapacity?: Prisma.SortOrder
   vehicleType?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -456,6 +477,7 @@ export type VehicleCatalogMinOrderByAggregateInput = {
   year?: Prisma.SortOrder
   batteryCapacity?: Prisma.SortOrder
   vehicleType?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -526,6 +548,7 @@ export type VehicleCatalogCreateWithoutConnectorsInput = {
   year: number
   batteryCapacity: number
   vehicleType: $Enums.VehicleType
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -539,6 +562,7 @@ export type VehicleCatalogUncheckedCreateWithoutConnectorsInput = {
   year: number
   batteryCapacity: number
   vehicleType: $Enums.VehicleType
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -567,6 +591,7 @@ export type VehicleCatalogUpdateWithoutConnectorsInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   batteryCapacity?: Prisma.FloatFieldUpdateOperationsInput | number
   vehicleType?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -580,6 +605,7 @@ export type VehicleCatalogUncheckedUpdateWithoutConnectorsInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   batteryCapacity?: Prisma.FloatFieldUpdateOperationsInput | number
   vehicleType?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -592,6 +618,7 @@ export type VehicleCatalogCreateWithoutVehiclesInput = {
   year: number
   batteryCapacity: number
   vehicleType: $Enums.VehicleType
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -605,6 +632,7 @@ export type VehicleCatalogUncheckedCreateWithoutVehiclesInput = {
   year: number
   batteryCapacity: number
   vehicleType: $Enums.VehicleType
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -633,6 +661,7 @@ export type VehicleCatalogUpdateWithoutVehiclesInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   batteryCapacity?: Prisma.FloatFieldUpdateOperationsInput | number
   vehicleType?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -646,6 +675,7 @@ export type VehicleCatalogUncheckedUpdateWithoutVehiclesInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   batteryCapacity?: Prisma.FloatFieldUpdateOperationsInput | number
   vehicleType?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -699,6 +729,7 @@ export type VehicleCatalogSelect<ExtArgs extends runtime.Types.Extensions.Intern
   year?: boolean
   batteryCapacity?: boolean
   vehicleType?: boolean
+  imageUrl?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -714,6 +745,7 @@ export type VehicleCatalogSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   year?: boolean
   batteryCapacity?: boolean
   vehicleType?: boolean
+  imageUrl?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -726,6 +758,7 @@ export type VehicleCatalogSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   year?: boolean
   batteryCapacity?: boolean
   vehicleType?: boolean
+  imageUrl?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -738,12 +771,13 @@ export type VehicleCatalogSelectScalar = {
   year?: boolean
   batteryCapacity?: boolean
   vehicleType?: boolean
+  imageUrl?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type VehicleCatalogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "brand" | "model" | "year" | "batteryCapacity" | "vehicleType" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["vehicleCatalog"]>
+export type VehicleCatalogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "brand" | "model" | "year" | "batteryCapacity" | "vehicleType" | "imageUrl" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["vehicleCatalog"]>
 export type VehicleCatalogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vehicles?: boolean | Prisma.VehicleCatalog$vehiclesArgs<ExtArgs>
   connectors?: boolean | Prisma.VehicleCatalog$connectorsArgs<ExtArgs>
@@ -765,6 +799,7 @@ export type $VehicleCatalogPayload<ExtArgs extends runtime.Types.Extensions.Inte
     year: number
     batteryCapacity: number
     vehicleType: $Enums.VehicleType
+    imageUrl: string | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1199,6 +1234,7 @@ export interface VehicleCatalogFieldRefs {
   readonly year: Prisma.FieldRef<"VehicleCatalog", 'Int'>
   readonly batteryCapacity: Prisma.FieldRef<"VehicleCatalog", 'Float'>
   readonly vehicleType: Prisma.FieldRef<"VehicleCatalog", 'VehicleType'>
+  readonly imageUrl: Prisma.FieldRef<"VehicleCatalog", 'String'>
   readonly isActive: Prisma.FieldRef<"VehicleCatalog", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"VehicleCatalog", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"VehicleCatalog", 'DateTime'>

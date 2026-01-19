@@ -169,20 +169,22 @@ model VehicleCatalog {
   model           String              @postgres.VarChar(100)
   year            Int                 @postgres.SmallInt
   batteryCapacity Float               @postgres.Real
-  vehicleType     VehicleType       
+  vehicleType     VehicleType
+  imageUrl        String?             @postgres.Text   // 👈 NEW
   isActive        Boolean             @default(true)
   createdAt       DateTime            @default(now()) @postgres.Timestamptz(3)
   updatedAt       DateTime            @updatedAt @postgres.Timestamptz(3)
+
   vehicles        UserVehicle[]
   connectors      VehicleConnectorSupport[]
 
-  // Indexes
   @@index([brand, model, year])
   @@index([vehicleType, isActive])
   @@index([isActive])
   @@unique([brand, model, year], name: "unique_vehicle_per_year")
   @@map("vehicle_catalog")
 }
+
 
 model VehicleConnectorSupport {
   catalogId         Int

@@ -4,11 +4,12 @@
 // ============================================
 import { createClerkClient } from '@clerk/express';
 import { getEnv } from './env.config';
- 
+import { logger } from '../utils/logger.util';
+
 class ClerkConfig {
   private static instance: ReturnType<typeof createClerkClient>;
-  private static isInitialized: boolean = false;
- 
+  private static isInitialized = false;
+
   private constructor() {}
 
   /**
@@ -19,13 +20,14 @@ class ClerkConfig {
       const secretKey = getEnv.CLERK_SECRET_KEY;
 
       if (!secretKey) {
-        throw new Error('❌ CLERK_SECRET_KEY is not configured');
+        logger.error('CLERK_SECRET_KEY is not configured');
+        throw new Error('CLERK_SECRET_KEY is not configured');
       }
 
       ClerkConfig.instance = createClerkClient({ secretKey });
       ClerkConfig.isInitialized = true;
-      
-      console.log('✅ Clerk initialized successfully');
+
+      logger.info('Clerk initialized successfully');
     }
 
     return ClerkConfig.instance;
@@ -45,12 +47,15 @@ class ClerkConfig {
     try {
       const clerk = ClerkConfig.getInstance();
       const user = await clerk.users.getUser(clerkUserId);
-      
-      console.log('✅ Retrieved user from Clerk:', clerkUserId);
+
+      logger.info('Retrieved user from Clerk', { clerkUserId });
       return user;
     } catch (error: any) {
-      console.error('❌ Error fetching user from Clerk:', error.message);
-      throw new Error(`Failed to fetch user from Clerk: ${error.message}`);
+      logger.error('Error fetching user from Clerk', {
+        clerkUserId,
+        error,
+      });
+      throw new Error(`Failed to fetch user from Clerk`);
     }
   }
 
@@ -60,16 +65,22 @@ class ClerkConfig {
   public static async getUserByEmail(email: string) {
     try {
       const clerk = ClerkConfig.getInstance();
-      const response = await clerk.users.getUserList({ emailAddress: [email] });
-      
-      if (response.data && response.data.length > 0) {
+      const response = await clerk.users.getUserList({
+        emailAddress: [email],
+      });
+
+      if (response.data?.length) {
+        logger.info('Retrieved user from Clerk by email', { email });
         return response.data[0];
       }
-      
+
       return null;
     } catch (error: any) {
-      console.error('❌ Error fetching user by email from Clerk:', error.message);
-      throw new Error(`Failed to fetch user by email: ${error.message}`);
+      logger.error('Error fetching user by email from Clerk', {
+        email,
+        error,
+      });
+      throw new Error('Failed to fetch user by email');
     }
   }
 
@@ -84,10 +95,10 @@ class ClerkConfig {
       const webhookSecret = getEnv.CLERK_WEBHOOK_SECRET;
 
       if (!webhookSecret) {
-        throw new Error('❌ CLERK_WEBHOOK_SECRET is not configured');
+        logger.error('CLERK_WEBHOOK_SECRET is not configured');
+        throw new Error('CLERK_WEBHOOK_SECRET is not configured');
       }
 
-      // Get Svix headers
       const svixId = Array.isArray(headers['svix-id'])
         ? headers['svix-id'][0]
         : headers['svix-id'];
@@ -99,25 +110,28 @@ class ClerkConfig {
         : headers['svix-signature'];
 
       if (!svixId || !svixTimestamp || !svixSignature) {
-        throw new Error('❌ Missing required Svix webhook headers');
+        logger.warn('Missing Svix webhook headers');
+        throw new Error('Missing required Svix webhook headers');
       }
 
-      // Verify using Svix
       const { Webhook } = await import('svix');
       const wh = new Webhook(webhookSecret);
-      
-      const payloadString = typeof payload === 'string' ? payload : payload.toString();
-      
+
+      const payloadString =
+        typeof payload === 'string' ? payload : payload.toString();
+
       const evt = wh.verify(payloadString, {
         'svix-id': svixId,
         'svix-timestamp': svixTimestamp,
         'svix-signature': svixSignature,
       });
 
-      console.log('✅ Webhook signature verified successfully');
+      logger.info('Clerk webhook signature verified');
       return evt;
     } catch (error: any) {
-      console.error('❌ Webhook verification failed:', error.message);
+      logger.warn('Clerk webhook verification failed', {
+        error: error.message,
+      });
       throw error;
     }
   }
@@ -134,15 +148,18 @@ class ClerkConfig {
       const user = await clerk.users.updateUserMetadata(clerkUserId, {
         publicMetadata: metadata,
       });
- 
-      console.log('✅ Updated user metadata in Clerk');
+
+      logger.info('Updated Clerk user metadata', { clerkUserId });
       return user;
     } catch (error: any) {
-      console.error('❌ Error updating user metadata:', error.message);
+      logger.error('Error updating Clerk user metadata', {
+        clerkUserId,
+        error,
+      });
       throw error;
     }
   }
- 
+
   /**
    * Delete user from Clerk
    */
@@ -150,16 +167,17 @@ class ClerkConfig {
     try {
       const clerk = ClerkConfig.getInstance();
       await clerk.users.deleteUser(clerkUserId);
-      
-      console.log('✅ Deleted user from Clerk:', clerkUserId);
+
+      logger.info('Deleted user from Clerk', { clerkUserId });
     } catch (error: any) {
-      console.error('❌ Error deleting user from Clerk:', error.message);
+      logger.error('Error deleting user from Clerk', {
+        clerkUserId,
+        error,
+      });
       throw error;
     }
   }
 }
- 
-// Export singleton instance
+
 export default ClerkConfig;
 export const clerkClient = ClerkConfig.getInstance();
- 

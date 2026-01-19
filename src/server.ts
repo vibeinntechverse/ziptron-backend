@@ -1,86 +1,86 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import helmet from "helmet";
-import morgan from "morgan";
-import { clerkMiddleware } from '@clerk/express'
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import { clerkMiddleware } from '@clerk/express';
+import { getEnv } from './config/env.config';
+import PostgresConfig from './config/postgres.config';
+import MongoConfig from './config/mongo.config';
+import webhookRoutes from './routes/webhook.routes';
+import vehicleCatalogRoutes from './routes/vehicleCatalog.routes';
 
-import PostgresConfig from "./config/postgres.config";
-import MongoConfig from "./config/mongo.config";
-import webhookRoutes from "./routes/webhook.routes";
-
-
-dotenv.config();
+import { logger } from './utils/logger.util';
+import { morganStream } from './utils/morganLogger.util';
 
 const app = express();
 
 /* ======================================================
-   TRUST PROXY (ngrok / reverse proxy)
+   TRUST PROXY
 ====================================================== */
-app.set("trust proxy", 1);
+app.set('trust proxy', 1);
 
 /* ======================================================
-   🔥 HARD CORS GUARD (runs before EVERYTHING)
+   CORS
 ====================================================== */
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    origin: getEnv.CLIENT_URL ,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
     allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Cookie",
-      "ngrok-skip-browser-warning",
+      'Content-Type',
+      'Authorization',
+      'Cookie',
+      'ngrok-skip-browser-warning',
     ],
   })
 );
 
-// Fast OPTIONS handling
+// Fast OPTIONS
 app.use((req, res, next) => {
-  if (req.method === "OPTIONS") return res.sendStatus(204);
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
-
 
 /* ======================================================
    WEBHOOKS (RAW BODY)
 ====================================================== */
 app.use(
-  "/api/v1/webhooks",
-  express.raw({ type: "application/json" }),
+  '/api/v1/webhooks',
+  express.raw({ type: 'application/json' }),
   webhookRoutes
 );
-
 
 /* ======================================================
    SECURITY & LOGGING
 ====================================================== */
 app.use(helmet());
-app.use(morgan("dev"));
-
+app.use(morgan('dev', { stream: morganStream }));
 
 /* ======================================================
-   BODY PARSERS
+   BODY PARSERS & AUTH
 ====================================================== */
 app.use(express.json());
-app.use(clerkMiddleware())
+app.use(clerkMiddleware());
 
 /* ======================================================
    ROUTES
 ====================================================== */
-app.get("/", (_req, res) => {
+app.get('/', (_req, res) => {
   res.status(200).json({
-    service: "Ziptron Backend",
-    version: "1.0.0",
-    status: "Running",
+    service: 'Ziptron Backend',
+    version: '1.0.0',
+    status: 'Running',
   });
 });
 
+app.use('/api/v1/vehicleCatalog', vehicleCatalogRoutes);
+
 /* ======================================================
-   HEALTH CHECK (Postgres + Mongo)
+   HEALTH CHECK
 ====================================================== */
-app.get("/health", async (_req, res) => {
+app.get('/health', async (_req, res) => {
   try {
     const [pgHealthy, mongoHealthy] = await Promise.all([
       PostgresConfig.healthCheck(),
@@ -90,23 +90,20 @@ app.get("/health", async (_req, res) => {
     const healthy = pgHealthy && mongoHealthy;
 
     res.status(healthy ? 200 : 503).json({
-      status: healthy ? "healthy" : "unhealthy",
+      status: healthy ? 'healthy' : 'unhealthy',
       timestamp: new Date().toISOString(),
-      service: "Ziptron Backend",
-      environment: process.env.NODE_ENV || "development",
+      service: 'Ziptron Backend',
+      environment: process.env.NODE_ENV || 'development',
       uptime: process.uptime(),
       databases: {
-        postgres: {
-          healthy: pgHealthy,
-        },
-        mongo: {
-          healthy: mongoHealthy,
-        },
+        postgres: { healthy: pgHealthy },
+        mongo: { healthy: mongoHealthy },
       },
     });
   } catch (error: any) {
+    logger.error('Health check failed', { error });
     res.status(503).json({
-      status: "unhealthy",
+      status: 'unhealthy',
       error: error.message,
       uptime: process.uptime(),
     });
@@ -120,7 +117,7 @@ const PORT = Number(process.env.PORT) || 5000;
 
 const startServer = async () => {
   try {
-    console.log("🔌 Connecting to databases...");
+    logger.info('Connecting to databases');
 
     await Promise.all([
       PostgresConfig.connect(),
@@ -128,19 +125,20 @@ const startServer = async () => {
     ]);
 
     const server = app.listen(PORT, () => {
-      console.log("⚡️ Ziptron Backend Started");
-      console.log(`🚀 URL: http://localhost:${PORT}`);
-      console.log(`📊 Health: http://localhost:${PORT}/health`);
+      logger.info('Ziptron Backend Started', {
+        port: PORT,
+        env: process.env.NODE_ENV || 'development',
+      });
     });
 
     /* ======================================================
        GRACEFUL SHUTDOWN
     ====================================================== */
     const gracefulShutdown = async (signal: string) => {
-      console.log(`\n🛑 ${signal} received. Shutting down gracefully...`);
+      logger.warn('Shutdown signal received', { signal });
 
       server.close(async () => {
-        console.log("🧯 HTTP server closed");
+        logger.info('HTTP server closed');
 
         try {
           await Promise.all([
@@ -148,26 +146,25 @@ const startServer = async () => {
             MongoConfig.disconnect(),
           ]);
 
-          console.log("✅ Databases disconnected");
+          logger.info('Databases disconnected');
           process.exit(0);
         } catch (error) {
-          console.error("❌ Shutdown error:", error);
+          logger.error('Error during shutdown', { error });
           process.exit(1);
         }
       });
 
-      // Force exit after 10s
       setTimeout(() => {
-        console.error("⚠️ Forced shutdown");
+        logger.error('Forced shutdown after timeout');
         process.exit(1);
       }, 10000);
     };
 
-    process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
-    process.on("SIGINT", () => gracefulShutdown("SIGINT"));
+    process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+    process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
-    process.on("uncaughtException", async (error) => {
-      console.error("❌ Uncaught Exception:", error);
+    process.on('uncaughtException', async (error) => {
+      logger.error('Uncaught Exception', { error });
       await Promise.all([
         PostgresConfig.disconnect(),
         MongoConfig.disconnect(),
@@ -175,8 +172,8 @@ const startServer = async () => {
       process.exit(1);
     });
 
-    process.on("unhandledRejection", async (reason) => {
-      console.error("❌ Unhandled Rejection:", reason);
+    process.on('unhandledRejection', async (reason) => {
+      logger.error('Unhandled Rejection', { reason });
       await Promise.all([
         PostgresConfig.disconnect(),
         MongoConfig.disconnect(),
@@ -184,7 +181,7 @@ const startServer = async () => {
       process.exit(1);
     });
   } catch (error) {
-    console.error("❌ Failed to start Ziptron server:", error);
+    logger.error('Failed to start Ziptron server', { error });
     process.exit(1);
   }
 };
