@@ -9,9 +9,22 @@ import PostgresConfig from './config/postgres.config';
 import MongoConfig from './config/mongo.config';
 import webhookRoutes from './routes/webhook.routes';
 import vehicleCatalogRoutes from './routes/vehicleCatalog.routes';
+import authRoutes from "./routes/auth.routes";
+import ingestRoutes from "./routes/ingest.routes";
+import userVehicleRoutes from "./routes/userVehicle.routes";
 
 import { logger } from './utils/logger.util';
 import { morganStream } from './utils/morganLogger.util';
+import chargingInfraRoutes from "./routes/chargingInfra.routes";
+import {
+  startTelemetryFlushJob,
+} from "./jobs/telemetry.flush.job";
+import {
+  startHeartbeatMonitorJob,
+} from "./jobs/heartbeat.monitor.job";
+
+
+
 
 const app = express();
 
@@ -75,7 +88,14 @@ app.get('/', (_req, res) => {
   });
 });
 
+
+
 app.use('/api/v1/vehicleCatalog', vehicleCatalogRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use("/api/v1/ingest", ingestRoutes);
+app.use("/api/v1/infra",chargingInfraRoutes);
+app.use("api/v1/userVehicle", userVehicleRoutes);
+
 
 /* ======================================================
    HEALTH CHECK
@@ -123,6 +143,10 @@ const startServer = async () => {
       PostgresConfig.connect(),
       MongoConfig.connect(),
     ]);
+
+    // 🚀 START BACKGROUND JOBS HERE
+startTelemetryFlushJob();
+startHeartbeatMonitorJob();
 
     const server = app.listen(PORT, () => {
       logger.info('Ziptron Backend Started', {
