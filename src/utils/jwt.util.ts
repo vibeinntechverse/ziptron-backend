@@ -1,6 +1,9 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { getEnv } from "../config/env.config";
-import { UserRole } from "../../generated/postgres";
+// ============================================
+// src/utils/jwt.util.ts
+// ============================================
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { getEnv } from '../config/env.config';
+import { UserRole } from '../../generated/postgres/client';
 
 /* -------------------------------------------------------------------------- */
 /*                                   CONFIG                                   */
@@ -9,8 +12,10 @@ import { UserRole } from "../../generated/postgres";
 const ACCESS_TOKEN_SECRET = getEnv.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = getEnv.REFRESH_TOKEN_SECRET;
 
-const ACCESS_TOKEN_EXPIRES_IN = "1d";
-const REFRESH_TOKEN_EXPIRES_IN = "30d";
+const ACCESS_TOKEN_EXPIRES_IN = '1d';
+const REFRESH_TOKEN_EXPIRES_IN = '30d';
+
+const JWT_ALGORITHM: jwt.Algorithm = 'HS256';
 
 /* -------------------------------------------------------------------------- */
 /*                                   TYPES                                    */
@@ -28,20 +33,38 @@ export interface DecodedRefreshToken extends JwtPayload {
 }
 
 /* -------------------------------------------------------------------------- */
+/*                                ERROR TYPES                                 */
+/* -------------------------------------------------------------------------- */
+
+export class InvalidAccessTokenError extends Error {
+  constructor() {
+    super('Access token is invalid or expired');
+    this.name = 'InvalidAccessTokenError';
+  }
+}
+
+export class InvalidRefreshTokenError extends Error {
+  constructor() {
+    super('Refresh token is invalid or expired');
+    this.name = 'InvalidRefreshTokenError';
+  }
+}
+
+/* -------------------------------------------------------------------------- */
 /*                              TOKEN GENERATORS                              */
 /* -------------------------------------------------------------------------- */
 
 export const generateAccessToken = (payload: AuthPayload): string => {
   return jwt.sign(payload, ACCESS_TOKEN_SECRET, {
     expiresIn: ACCESS_TOKEN_EXPIRES_IN,
-    algorithm: "HS256",
+    algorithm: JWT_ALGORITHM,
   });
 };
 
 export const generateRefreshToken = (payload: { id: string }): string => {
   return jwt.sign(payload, REFRESH_TOKEN_SECRET, {
     expiresIn: REFRESH_TOKEN_EXPIRES_IN,
-    algorithm: "HS256",
+    algorithm: JWT_ALGORITHM,
   });
 };
 
@@ -52,16 +75,16 @@ export const generateRefreshToken = (payload: { id: string }): string => {
 export const verifyAccessToken = (token: string): DecodedAccessToken => {
   try {
     return jwt.verify(token, ACCESS_TOKEN_SECRET) as DecodedAccessToken;
-  } catch (error: any) {
-    throw new Error(`Access token invalid or expired: ${error.message}`);
+  } catch {
+    throw new InvalidAccessTokenError();
   }
 };
 
 export const verifyRefreshToken = (token: string): DecodedRefreshToken => {
   try {
     return jwt.verify(token, REFRESH_TOKEN_SECRET) as DecodedRefreshToken;
-  } catch (error: any) {
-    throw new Error(`Refresh token invalid or expired: ${error.message}`);
+  } catch {
+    throw new InvalidRefreshTokenError();
   }
 };
 
@@ -79,7 +102,7 @@ export const decodeToken = (token: string): JwtPayload | null => {
 
 export const isTokenExpired = (token: string): boolean => {
   const decoded = decodeToken(token);
-  if (!decoded || !decoded.exp) return true;
+  if (!decoded?.exp) return true;
 
   const currentTime = Math.floor(Date.now() / 1000);
   return decoded.exp < currentTime;

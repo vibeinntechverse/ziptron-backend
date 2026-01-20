@@ -59,9 +59,12 @@ enum ConnectorType {
 enum ChargingGunStatus {
   AVAILABLE
   OCCUPIED
-  MAINTENANCE
+  CHARGING
+  FAULT
   OFFLINE
+  MAINTENANCE
 }
+
 
 enum TicketStatus {
   OPEN
@@ -123,6 +126,13 @@ enum WalletHoldStatus {
   CONSUMED
   RELEASED
 }
+
+enum ChargerProtocol {
+  HTTP
+  OCPP_1_6
+  OCPP_2_0_1
+}
+
 
 // ======================================================
 // MODELS
@@ -279,20 +289,27 @@ model StationMedia {
 
 // --- CHARGERS & GUNS ---
 model Charger {
-  id                String            @id @default(uuid()) @postgres.Uuid
-  stationId         String            @postgres.Uuid
-  powerKW           Float             @postgres.Real
-  isActive          Boolean           @default(true)
-  createdAt         DateTime          @default(now()) @postgres.Timestamptz(3)
-  updatedAt         DateTime          @updatedAt @postgres.Timestamptz(3)
-  station           ChargingStation   @relation(fields: [stationId], references: [id], onDelete: Cascade)
+  id                String              @id @default(uuid()) @postgres.Uuid
+  stationId         String              @postgres.Uuid
+
+  vendor            String            
+  model             String            
+  serialNumber      String              @unique
+  protocol          ChargerProtocol     @default(OCPP_1_6)
+
+  powerKW           Float               @postgres.Real
+  isActive          Boolean             @default(true)
+
+  createdAt         DateTime            @default(now()) @postgres.Timestamptz(3)
+  updatedAt         DateTime            @updatedAt @postgres.Timestamptz(3)
+
+  station           ChargingStation     @relation(fields: [stationId], references: [id], onDelete: Cascade)
   guns              ChargingGun[]
 
-  // Indexes
   @@index([stationId, isActive])
-  @@index([powerKW])
   @@map("chargers")
 }
+
 
 model ChargingGun {
   id                  String                 @id @default(uuid()) @postgres.Uuid
@@ -314,6 +331,23 @@ model ChargingGun {
   @@index([lastHeartbeat])
   @@map("charging_guns")
 }
+
+
+model OcppTransaction {
+  id            String   @id @default(uuid()) @postgres.Uuid
+  ocppTxnId     Int
+  chargerId     String   @postgres.Uuid
+  gunId         String   @postgres.Uuid
+  sessionId     String   @postgres.Uuid
+
+  startedAt     DateTime @postgres.Timestamptz(3)
+  endedAt       DateTime?
+
+  @@unique([chargerId, ocppTxnId])
+  @@index([sessionId])
+  @@map("ocpp_transactions")
+}
+
 
 // --- BOOKINGS ---
 model ChargingBooking {
@@ -540,7 +574,7 @@ model StationReview {
   userId      String          @postgres.Uuid
   stationId   String          @postgres.Uuid
   rating      Int             @postgres.SmallInt
-  media       String
+  media       String?
   comment     String?         @postgres.Text
   createdAt   DateTime        @default(now()) @postgres.Timestamptz(3)
   updatedAt   DateTime        @updatedAt @postgres.Timestamptz(3)

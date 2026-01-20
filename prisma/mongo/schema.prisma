@@ -44,20 +44,26 @@ model ChatMessage {
 // ---------------- TELEMETRY ----------------
 model TelemetryLog {
   id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
-  sessionId String
-  gunId     String
-  voltage   Float
-  current   Float
-  power     Float
-  soc       Int
+
+  chargerId String                // 🔥 REQUIRED
+  gunId     String?
+  sessionId String?
+
+  voltage   Float?
+  current   Float?
+  power     Float?
+  soc       Int?
   temp      Float?
   errorCode String?
+
   timestamp DateTime @default(now())
 
-  @@index([sessionId, timestamp(sort: Desc)])
+  @@index([chargerId, timestamp(sort: Desc)])
   @@index([gunId, timestamp(sort: Desc)])
+  @@index([sessionId, timestamp(sort: Desc)])
   @@map("telemetry_logs")
 }
+
 
 // ---------------- SESSION ANALYTICS ----------------
 model SessionAnalytics {
@@ -96,37 +102,46 @@ model Notification {
 }
 
 
-// ---------------- CHARGER HEARTBEATS ----------------
-model ChargerHeartbeat {
+// ---------------- GUN HEARTBEATS ----------------
+model GunHeartbeat {
   id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+
+  chargerId String          // 🔥 ADD
   gunId     String
   stationId String
-  status    String        // AVAILABLE | OCCUPIED | OFFLINE | ERROR
+
+  status    String          // AVAILABLE | CHARGING | FAULT | OFFLINE
   firmware  String?
   latencyMs Int?
   metadata  Json?
+
   timestamp DateTime @default(now())
 
   @@index([gunId, timestamp(sort: Desc)])
-  @@index([stationId, timestamp(sort: Desc)])
-  @@map("charger_heartbeats")
+  @@index([chargerId, timestamp(sort: Desc)])
+  @@map("gun_heartbeats")
 }
 
 
 // ---------------- GUN STATUS SNAPSHOT ----------------
 model GunStatusSnapshot {
   id          String   @id @default(auto()) @map("_id") @mongo.ObjectId
+
   gunId       String   @unique
+  chargerId   String           // 🔥 ADD
   stationId   String
-  status      String        // AVAILABLE | OCCUPIED | OFFLINE | MAINTENANCE
+
+  status      String
   healthScore Float
   lastSeen    DateTime
   updatedAt   DateTime @default(now())
 
   @@index([stationId])
+  @@index([chargerId])
   @@index([status])
   @@map("gun_status_snapshots")
 }
+
 
 
 // ---------------- USER CHECK-INS ----------------
@@ -144,4 +159,18 @@ model UserCheckIn {
   @@index([stationId, createdAt(sort: Desc)])
   @@index([gunId, createdAt(sort: Desc)])
   @@map("user_checkins")
+}
+
+
+
+model OcppEvent {
+  id         String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  chargerId  String
+  gunId      String?
+  eventType  String   // BootNotification | StatusNotification | StartTxn | StopTxn | MeterValues
+  payload    Json
+  timestamp  DateTime @default(now())
+
+  @@index([chargerId, timestamp(sort: Desc)])
+  @@map("ocpp_events")
 }
